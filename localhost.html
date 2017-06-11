@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zn">
+<head>
+	<meta charset="UTF-8">
+	<title>localhost</title>
+	<style>
+		span{display: inline-block;width: 120px;text-align: center;}
+	</style>
+	<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+</head>
+<body>
+	<p>
+		<span>书号</span>
+		<span>序号</span>
+		<span>书名</span>
+	</p>
+	<script type="text/javascript">
+		// 处理兼容问题
+		if(self.fetch) {
+		   fetch("bookstore.json")
+	        .then(
+			    function(response){
+			        if(response.status!==200){
+			            console.log("存在一个问题，状态码为："+response.status);
+			            return;
+			        }
+			        console.log(response);
+			        //检查响应文本
+			        response.json().then(function(data){
+			            console.log(data);
+			            for(var i=0;i<data.books.length;i++){
+			            	var link  = $("<p/>");
+			            	link.html(
+			            		'<span>'+data.books[i].category+'</span>'+
+			            		'<span>'+data.books[i].author+'</span>'+
+			            		'<span>'+data.books[i].bookname+'</span>');
+			            	link.appendTo('body');
+			            }
+			        });
+			    }
+			)
+			.catch(function(err){
+			    console.log("Fetch错误:"+err);
+			});
+		}else{
+			// 兼容IE的方法
+			// 
+			// 
+		} 
+	</script>
+</body>
+</html>
